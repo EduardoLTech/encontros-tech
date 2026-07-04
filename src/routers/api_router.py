@@ -5,7 +5,7 @@ import json
 
 from services import event_service
 from services.event_service import EventNotFoundError
-from schemas.event import Event, EventCreate, EventUpdate
+from schemas.event import Event as EventSchema, EventCreate, EventUpdate
 from core.database import get_db
 from core.logging import get_logger, log_business_event
 
@@ -31,8 +31,8 @@ def create_event():
                 "method": "API"
             })
             
-            return jsonify(result.model_dump())
-            
+            return jsonify(EventSchema.model_validate(result).model_dump())
+
     except ValueError as e:
         logger.warning(f"Erro de validação na criação do evento: {str(e)}")
         abort(400, description=f"Dados inválidos: {str(e)}")
@@ -60,7 +60,7 @@ def read_events():
                 "method": "API"
             })
             
-            return jsonify([event.model_dump() for event in events])
+            return jsonify([EventSchema.model_validate(event).model_dump() for event in events])
             
     except Exception as e:
         logger.error(f"Erro ao listar eventos: {str(e)}")
@@ -80,8 +80,8 @@ def get_event_by_token(edit_token: str):
                 "method": "API"
             })
             
-            return jsonify(result.model_dump())
-            
+            return jsonify(EventSchema.model_validate(result).model_dump())
+
     except EventNotFoundError:
         logger.warning(f"Evento não encontrado para token: {edit_token[:8]}...")
         abort(404, description="Event not found")
@@ -108,8 +108,8 @@ def update_event(edit_token: str):
                 "method": "API"
             })
             
-            return jsonify(result.model_dump())
-            
+            return jsonify(EventSchema.model_validate(result).model_dump())
+
     except EventNotFoundError:
         logger.warning(f"Evento não encontrado para atualização: {edit_token[:8]}...")
         abort(404, description="Event not found")
