@@ -39,6 +39,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: gp2
   resources:
     requests:
       storage: 1Gi
@@ -81,6 +82,8 @@ spec:
                 secretKeyRef:
                   name: encontros-tech-secret
                   key: POSTGRES_DB
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
@@ -175,10 +178,9 @@ metadata:
   name: encontros-tech
   namespace: encontros-tech
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: encontros-tech
   ports:
-    - port: 8000
+    - port: 80
       targetPort: 8000
-      nodePort: 30080

@@ -221,3 +221,13 @@ __marimo__/
 kubeconfig
 
 .claude
+
+# Terraform
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/*.tfplan
+terraform/crash.log
+terraform/crash.*.log
+*.tfvars
+*.tfvars.json
