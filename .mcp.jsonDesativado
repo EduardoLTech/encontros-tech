@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "kubernetes-mcp": {
+      "type": "stdio",
+      "command": "mcp-server-kubernetes",
+      "args": [],
+      "env": {}
+    }
+  }
+}

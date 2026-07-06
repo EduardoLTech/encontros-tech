@@ -157,19 +157,19 @@ spec:
                   key: DATABASE_URL
           readinessProbe:
             httpGet:
-              path: /
+              path: /ready
               port: 8000
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             periodSeconds: 10
-            timeoutSeconds: 5
+            timeoutSeconds: 3
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /
+              path: /health
               port: 8000
-            initialDelaySeconds: 15
-            periodSeconds: 20
-            timeoutSeconds: 5
+            initialDelaySeconds: 20
+            periodSeconds: 15
+            timeoutSeconds: 3
             failureThreshold: 3
 ---
 apiVersion: v1
